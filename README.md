@@ -6,10 +6,13 @@ at our school by having people swipe their student ID card. (Much
 quicker than having them say their name, student ID number, email,
 etc.)
 
-##Compiling for Windows
+## Compiling for Windows
 32-bit:
+
 `GOOS=windows GOARCH=386 go build -o moviething.exe`
+
 64-bit:
+
 `GOOS=windows GOARCH=amd64 go build -o moviething64.exe`
 
 Originally, it was going to use the "Terminal" package, but apparently
