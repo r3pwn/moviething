@@ -4,10 +4,28 @@ import (
     "bufio"
     "fmt"
     "os"
+    "os/exec"
     "regexp"
     "strings"
     "time"
+    "runtime"
 )
+
+func clear(){
+   if runtime.GOOS == "windows"{
+      c := exec.Command("cls");
+      c.Stdout = os.Stdout
+      if err := c.Run(); err != nil {
+         fmt.Println("Error Clearing Screen");
+      }
+   }else if runtime.GOOS == "linux" {
+      c := exec.Command("clear");
+      c.Stdout = os.Stdout
+      if err := c.Run(); err != nil {
+         fmt.Println("Error Clearing Screen");
+      }
+   }
+}
 
 func getStudentData(cardData string) {
     // regex pattern to find last/first name
@@ -45,5 +63,6 @@ func main() {
         fmt.Println("Please swipe a card...")
         cardData, _ := reader.ReadString('\n')
         getStudentData(string(cardData))
+        clear()
     }
 }
