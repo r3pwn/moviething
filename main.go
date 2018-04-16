@@ -11,20 +11,32 @@ import (
     "runtime"
 )
 
-func clear(){
+func clear() {
    if runtime.GOOS == "windows"{
       c := exec.Command("cls");
       c.Stdout = os.Stdout
       if err := c.Run(); err != nil {
          fmt.Println("Error Clearing Screen");
       }
-   }else if runtime.GOOS == "linux" {
+   } else if runtime.GOOS == "linux" {
       c := exec.Command("clear");
       c.Stdout = os.Stdout
       if err := c.Run(); err != nil {
          fmt.Println("Error Clearing Screen");
       }
    }
+}
+
+func printHeader() {
+    fmt.Println("  _   _     _")
+    fmt.Println(" | | | |   (_)")
+    fmt.Println(" | |_| |__  _ _ __   __ _")
+    fmt.Println(" | __| '_ \\| | '_ \\ / _` |")
+    fmt.Println(" | |_| | | | | | | | (_| |")
+    fmt.Println("  \\__|_| |_|_|_| |_|\\__, |")
+    fmt.Println("                     __/ |")
+    fmt.Println("                    |___/")
+    fmt.Println("")
 }
 
 func getStudentData(cardData string) {
@@ -50,16 +62,9 @@ func getStudentData(cardData string) {
 }
 
 func main() {
-    fmt.Println("  _   _     _")
-    fmt.Println(" | | | |   (_)")
-    fmt.Println(" | |_| |__  _ _ __   __ _")
-    fmt.Println(" | __| '_ \\| | '_ \\ / _` |")
-    fmt.Println(" | |_| | | | | | | | (_| |")
-    fmt.Println("  \\__|_| |_|_|_| |_|\\__, |")
-    fmt.Println("                     __/ |")
-    fmt.Println("                    |___/")
     reader := bufio.NewReader(os.Stdin)
     for {
+        printHeader()
         fmt.Println("Please swipe a card...")
         cardData, _ := reader.ReadString('\n')
         getStudentData(string(cardData))
