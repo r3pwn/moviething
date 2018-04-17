@@ -53,7 +53,7 @@ func getStudentData(cardData string) (fname, lname, number, email string) {
     nameSlice := strings.Split(name, "/")
     
     // assemble the student email
-    email := string(nameSlice[1][0]) + nameSlice[0] + stuNum + "@floridapoly.edu"
+    email = string(nameSlice[1][0]) + nameSlice[0] + stuNum + "@floridapoly.edu"
     email = strings.ToLower(email)
     
     return nameSlice[1], nameSlice[0], stuNum, email
@@ -84,7 +84,24 @@ func main() {
         values["lastName"] = lname
         values["number"] = num
         values["email"] = email
-        earlyShowing.Post(values)
+        if len(os.Args) > 1 && os.Args[1] == "early" {            
+            fmt.Println("early showing picked")
+            earlyShowing.Post(values)
+        } else if len(os.Args) > 1 && os.Args[1] == "late" {            
+            fmt.Println("late showing picked")
+            lateShowing.Post(values)
+        } else {
+            fmt.Println("Enter 1 for early showing, 2 for late showing...")
+            answer, _ := reader.ReadString('\n')
+            answer = strings.TrimRight(string(answer), "\n")
+            if answer == "1" {
+                fmt.Println("early showing picked")
+                earlyShowing.Post(values)
+            } else if answer == "2" {
+                fmt.Println("late showing picked")
+                lateShowing.Post(values)
+            }
+        }
         fmt.Println("Swipe for " + fname + " submitted successfully...")
         time.Sleep(time.Second)
         clear()
