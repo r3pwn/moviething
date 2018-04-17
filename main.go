@@ -14,7 +14,7 @@ import (
 
 func clear() {
    if runtime.GOOS == "windows"{
-      c := exec.Command("cls");
+      c := exec.Command("cmd", "/c", "cls");
       c.Stdout = os.Stdout
       if err := c.Run(); err != nil {
          fmt.Println("Error Clearing Screen");
