@@ -5,10 +5,10 @@ import (
     "fmt"
     "os"
     "os/exec"
-    "regexp"
     "strings"
     "time"
     "runtime"
+    "github.com/libpoly/libcardutils-go"
     "github.com/qwerty0981/FormAssistant"
 )
 
@@ -46,21 +46,11 @@ func createEmail(fname, lname, num string) string {
 
 func getStudentData(cardData string) (map[string]string) {
     values := make(map[string]string) 
-   // regex pattern to find last/first name
-    nameReg, _ := regexp.Compile("\\^([a-zA-Z/]+)")
-    name := nameReg.FindStringSubmatch(cardData)[1]
-
-    // regex pattern to find student id num
-    numReg, _ := regexp.Compile("(?:0{6,8})([0-9]+)")
-    stuNum := numReg.FindStringSubmatch(cardData)[1]
-
-    // split the name on the "/"
-    nameSlice := strings.Split(name, "/")
-
-    values["firstName"] = nameSlice[1]
-    values["lastName"] = nameSlice[0]
-    values["email"] = createEmail(nameSlice[1], nameSlice[0], stuNum)
-    values["number"] = stuNum
+    card := cardutils.CreateCard(cardData)
+    values["firstName"] = card.GetFirstName()
+    values["lastName"] = card.GetLastName()
+    values["email"] = createEmail(card.GetFirstName(), card.GetLastName(), card.GetID())
+    values["number"] = card.GetID()
 
     return values
 }
